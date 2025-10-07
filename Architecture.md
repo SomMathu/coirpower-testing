@@ -58,10 +58,10 @@ flowchart TD
     end
 
     subgraph Frontend[Frontend & Output]
-        Web[Web Interface (Blade/Livewire)]
-        Mobile[Mobile App]
-        Report[Reports/Exports]
-        Notify[Notifications (Email/Firebase)]
+        Web["Web Interface (Blade/Livewire)"]
+        Mobile["Mobile App"]
+        Report["Reports/Exports"]
+        Notify["Notifications (Email/Firebase)"]
     end
 
     IoT --> Controller
@@ -85,7 +85,7 @@ flowchart TD
     style DataSources fill:#e6f3ff,stroke:#333
     style Backend fill:#fff3e6,stroke:#333
     style Storage fill:#e6ffe6,stroke:#333
-    style Frontend fill:#ffe6e6,stroke:#333## Data Processing and Integration
+    style Frontend fill:#ffe6e6,stroke:#333
 
 ### Data Processing Pipeline
 ```mermaid
@@ -168,6 +168,7 @@ routes/
 ---
 
 Last updated: 2025-09-26
+
 
 
 
