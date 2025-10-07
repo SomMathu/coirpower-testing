@@ -52,6 +52,7 @@ flowchart TD
         Service[Service Layer]
         Job[Background Jobs (Laravel Scheduler)]
         Cache[Cache Layer]
+        Sanctum[Laravel Sanctum]
     end
 
     subgraph Storage[Storage]
@@ -61,7 +62,8 @@ flowchart TD
 
     subgraph Frontend[Frontend & Output]
         Web[Web Interface (Blade/Livewire)]
-        Mobile[Mobile App (Firebase Notifications)]
+            Mobile[Mobile App (Firebase Notifications)]
+        Auth[Authentication (Sanctum)]
         Report[Reports/Exports]
         Notify[Notifications (Email/Firebase)]
     end
@@ -87,6 +89,10 @@ flowchart TD
     MySQL --> Notify
     Redis --> Web
     Redis --> Mobile
+    Auth --> Controller
+    Auth --> Mobile
+    Controller --> Sanctum
+    Mobile --> Sanctum
 
     Web --> AWS
     Mobile --> AWS
@@ -104,6 +110,9 @@ flowchart TD
     classDef aws fill:#FF9900,stroke:#333,color:#fff;
     classDef firebase fill:#FFCA28,stroke:#333,color:#000;
     classDef livewire fill:#424F79,stroke:#333,color:#fff;
+    classDef sanctum fill:#F56565,stroke:#333,color:#fff;
+
+
 
     linkStyle 0 stroke-width:0px;
     linkStyle 1 stroke-width:0px;
@@ -602,7 +611,8 @@ flowchart LR
 
     subgraph Output[Data Consumption]
         Web[Web Interface (Blade/Livewire)]
-        Mobile[Mobile App (Firebase Notifications)]
+            Mobile[Mobile App (Firebase Notifications)]
+        Auth[Authentication (Sanctum)]
         Reports[Reports/Exports]
     end
 
@@ -621,6 +631,8 @@ flowchart LR
     classDef aws fill:#FF9900,stroke:#333,color:#fff;
     classDef firebase fill:#FFCA28,stroke:#333,color:#000;
     classDef livewire fill:#424F79,stroke:#333,color:#fff;
+    classDef sanctum fill:#F56565,stroke:#333,color:#fff;
+
 ```
 
 ### System Integration Points
