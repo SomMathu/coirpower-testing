@@ -37,7 +37,7 @@ The system is organized into interconnected modules that handle different aspect
 
 
 ## Detailed Architectural Diagram
-
+```
 flowchart TD
     subgraph DataSources[Data Sources]
         IoT[IoT Devices]
@@ -170,6 +170,7 @@ routes/
 ---
 
 Last updated: 2025-09-26
+
 
 
 
