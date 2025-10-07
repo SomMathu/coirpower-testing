@@ -36,40 +36,39 @@ The system is organized into interconnected modules that handle different aspect
 - Views: `resources/views/...` — Blade templates and Livewire partials
 
 ## Detailed Architectural Diagram
-
 ```mermaid
 flowchart TD
-    U1[User via Web Browser]
-    U2[User via Mobile App]
+    U1["User via Web Browser"]
+    U2["User via Mobile App"]
 
-    W[Web UI (Blade / Livewire)]
-    M[Mobile App (API Consumer)]
+    W["Web UI (Blade / Livewire)"]
+    M["Mobile App (API Consumer)"]
 
-    L[Laravel Backend]
-    DB[(MySQL Database)]
-    JOB[Background Jobs & Scheduler]
-    REDIS[(Redis Cache)]
+    L["Laravel Backend"]
+    DB["MySQL Database"]
+    JOB["Background Jobs & Scheduler"]
+    REDIS["Redis Cache"]
 
-    IOT[IoT Devices]
-    WEATHER[Weather APIs]
-    NOTIFY[Firebase / Email Notifications]
+    IOT["IoT Devices"]
+    WEATHER["Weather APIs"]
+    NOTIFY["Firebase / Email Notifications"]
 
-    U1 -->|HTTP Request| W
-    W -->|Route/Controller Call| L
-    L -->|Query / Store Data| DB
-    L -->|Trigger Jobs| JOB
-    L -->|Read/Write Cache| REDIS
-    L -->|Send HTML / JSON Response| W
+    U1 -->|"HTTP Request"| W
+    W -->|"Route/Controller Call"| L
+    L -->|"Query / Store Data"| DB
+    L -->|"Trigger Jobs"| JOB
+    L -->|"Read/Write Cache"| REDIS
+    L -->|"Send HTML / JSON Response"| W
 
-    U2 -->|API Request (JSON)| M
-    M -->|REST API Call| L
-    L -->|DB Query| DB
-    L -->|Send JSON Response| M
+    U2 -->|"API Request (JSON)"| M
+    M -->|"REST API Call"| L
+    L -->|"DB Query"| DB
+    L -->|"Send JSON Response"| M
 
-    IOT -->|Device Data| L
-    WEATHER -->|Scheduled API Call| L
-    L -->|Send Alerts / Updates| NOTIFY
-    JOB -->|Process / Aggregate Data| DB
+    IOT -->|"Device Data"| L
+    WEATHER -->|"Scheduled API Call"| L
+    L -->|"Send Alerts / Updates"| NOTIFY
+    JOB -->|"Process / Aggregate Data"| DB
 
     style W fill:#e8f3ff,stroke:#333,stroke-width:1px
     style M fill:#e8f3ff,stroke:#333,stroke-width:1px
@@ -80,8 +79,6 @@ flowchart TD
     style IOT fill:#f0f7ff,stroke:#333,stroke-width:1px
     style WEATHER fill:#f0f7ff,stroke:#333,stroke-width:1px
     style NOTIFY fill:#f0f7ff,stroke:#333,stroke-width:1px
-
-
 ```
 ## Data Processing and Integration
 
@@ -166,6 +163,7 @@ routes/
 ---
 
 Last updated: 2025-09-26
+
 
 
 
