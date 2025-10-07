@@ -39,36 +39,48 @@ The system is organized into interconnected modules that handle different aspect
 
 ```mermaid
 flowchart TD
-    A[User]
-    B[IoT Devices]
-    C["Web UI (Blade or Livewire)"]
-    D["Mobile App (API Consumer)"]
-    E[Laravel Backend]
-    F[(MySQL Database)]
-    G["Firebase or Email Notifications"]
-    H["Weather APIs"]
+    U1[User via Web Browser]
+    U2[User via Mobile App]
 
-    style E fill:#f08d4a,stroke:#333
-    style C fill:#d9f0f7,stroke:#333
-    style D fill:#d9f0f7,stroke:#333
-    style F fill:#e9f7d9,stroke:#333
+    W[Web UI (Blade / Livewire)]
+    M[Mobile App (API Consumer)]
 
-    A -->|Login Request| C
-    C -->|API Request Auth| E
-    E -->|Response| C
+    L[Laravel Backend]
+    DB[(MySQL Database)]
+    JOB[Background Jobs & Scheduler]
+    REDIS[(Redis Cache)]
 
-    C -->|Data Request| E
-    E -->|DB Query| F
-    F -->|DB Result| E
-    E -->|Response Render| C
+    IOT[IoT Devices]
+    WEATHER[Weather APIs]
+    NOTIFY[Firebase / Email Notifications]
 
-    D -->|API Request| E
-    B -->|Real-time Data| E
-    H -->|Scheduled Pull| E
+    U1 -->|HTTP Request| W
+    W -->|Route/Controller Call| L
+    L -->|Query / Store Data| DB
+    L -->|Trigger Jobs| JOB
+    L -->|Read/Write Cache| REDIS
+    L -->|Send HTML / JSON Response| W
 
-    E -->|Async Write| F
-    E -->|Notification| G
-    E -->|Report Export| C
+    U2 -->|API Request (JSON)| M
+    M -->|REST API Call| L
+    L -->|DB Query| DB
+    L -->|Send JSON Response| M
+
+    IOT -->|Device Data| L
+    WEATHER -->|Scheduled API Call| L
+    L -->|Send Alerts / Updates| NOTIFY
+    JOB -->|Process / Aggregate Data| DB
+
+    style W fill:#e8f3ff,stroke:#333,stroke-width:1px
+    style M fill:#e8f3ff,stroke:#333,stroke-width:1px
+    style L fill:#fff3e0,stroke:#333,stroke-width:1px
+    style DB fill:#e8ffe8,stroke:#333,stroke-width:1px
+    style JOB fill:#ffe6e6,stroke:#333,stroke-width:1px
+    style REDIS fill:#ffe6e6,stroke:#333,stroke-width:1px
+    style IOT fill:#f0f7ff,stroke:#333,stroke-width:1px
+    style WEATHER fill:#f0f7ff,stroke:#333,stroke-width:1px
+    style NOTIFY fill:#f0f7ff,stroke:#333,stroke-width:1px
+
 
 ```
 ## Data Processing and Integration
@@ -154,6 +166,7 @@ routes/
 ---
 
 Last updated: 2025-09-26
+
 
 
 
