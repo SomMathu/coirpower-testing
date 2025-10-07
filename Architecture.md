@@ -39,51 +39,37 @@ The system is organized into interconnected modules that handle different aspect
 
 ```mermaid
 flowchart TD
-    % Define the main components
     A[User]
     B[IoT Devices]
-    C[Web UI (Blade/Livewire)]
-    D[Mobile App (API Consumer)]
+    C["Web UI (Blade/Livewire)"]
+    D["Mobile App (API Consumer)"]
     E[Laravel Backend]
-    F[MySQL Database]
-    G[Firebase/Email Notifications]
-    H[Weather APIs]
+    F[(MySQL Database)]
+    G["Firebase / Email Notifications"]
+    H["Weather APIs"]
 
-    % Style for visual grouping (similar to your previous diagram)
     style E fill:#f08d4a,stroke:#333
     style C fill:#d9f0f7,stroke:#333
     style D fill:#d9f0f7,stroke:#333
     style F fill:#e9f7d9,stroke:#333
 
-    % -----------------
-    % Authentication (Simplified, since Keycloak is not listed)
-    A -- Log In Request --> C
-    C -- API Request (Login/Auth) --> E
-    E -- Response --> C
+    A -->|Log In Request| C
+    C -->|API Request (Login/Auth)| E
+    E -->|Response| C
 
-    % -----------------
-    % Primary Data Flow (Web)
-    C -- API/Livewire Request --> E
-    E -- Database Request --> F
-    F -- Database Response --> E
-    E -- Data/HTML Response --> C
+    C -->|API/Livewire Request| E
+    E -->|Database Request| F
+    F -->|Database Response| E
+    E -->|Data/HTML Response| C
 
-    % -----------------
-    % Primary Data Flow (Mobile)
-    D -- API Request --> E
+    D -->|API Request| E
+    B -->|Real-time Data| E
+    H -->|Scheduled API Pull| E
 
-    % -----------------
-    % External/IoT Data Ingestion
-    B -- Real-time Data --> E
-    H -- Scheduled API Pull --> E
-    
-    % -----------------
-    % Background/Reporting
-    E -- Asynchronous Write --> F
-    E -- Send Notification --> G
-    E -- Report Generation/Export --> C
+    E -->|Asynchronous Write| F
+    E -->|Send Notification| G
+    E -->|Report Generation/Export| C
 ```
-
 ## Data Processing and Integration
 
 ### Data Processing Pipeline
@@ -167,4 +153,5 @@ routes/
 ---
 
 Last updated: 2025-09-26
+
 
