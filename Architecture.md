@@ -41,11 +41,11 @@ The system is organized into interconnected modules that handle different aspect
 flowchart TD
     A[User]
     B[IoT Devices]
-    C["Web UI (Blade/Livewire)"]
+    C["Web UI (Blade or Livewire)"]
     D["Mobile App (API Consumer)"]
     E[Laravel Backend]
     F[(MySQL Database)]
-    G["Firebase / Email Notifications"]
+    G["Firebase or Email Notifications"]
     H["Weather APIs"]
 
     style E fill:#f08d4a,stroke:#333
@@ -53,22 +53,23 @@ flowchart TD
     style D fill:#d9f0f7,stroke:#333
     style F fill:#e9f7d9,stroke:#333
 
-    A -->|Log In Request| C
-    C -->|API Request (Login/Auth)| E
+    A -->|Login Request| C
+    C -->|API Request Auth| E
     E -->|Response| C
 
-    C -->|API/Livewire Request| E
-    E -->|Database Request| F
-    F -->|Database Response| E
-    E -->|Data/HTML Response| C
+    C -->|Data Request| E
+    E -->|DB Query| F
+    F -->|DB Result| E
+    E -->|Response Render| C
 
     D -->|API Request| E
     B -->|Real-time Data| E
-    H -->|Scheduled API Pull| E
+    H -->|Scheduled Pull| E
 
-    E -->|Asynchronous Write| F
-    E -->|Send Notification| G
-    E -->|Report Generation/Export| C
+    E -->|Async Write| F
+    E -->|Notification| G
+    E -->|Report Export| C
+
 ```
 ## Data Processing and Integration
 
@@ -153,5 +154,6 @@ routes/
 ---
 
 Last updated: 2025-09-26
+
 
 
