@@ -35,6 +35,60 @@ The system is organized into interconnected modules that handle different aspect
 - Models: `app/Models` — Eloquent models representing domain objects and device data
 - Views: `resources/views/...` — Blade templates and Livewire partials
 
+
+## Detailed Architectural Diagram
+
+```mermaid
+flowchart TD
+    subgraph DataSources[Data Sources]
+        IoT[IoT Devices]
+        Manual[Manual Entry]
+        API[External APIs]
+    end
+
+    subgraph Backend[Backend Processing]
+        Controller[Controllers]
+        Service[Service Layer]
+        Job[Background Jobs]
+        Cache[Cache Layer]
+    end
+
+    subgraph Storage[Storage]
+        DB[(MySQL Database)]
+        Redis[(Redis Cache)]
+    end
+
+    subgraph Frontend[Frontend & Output]
+        Web[Web Interface (Blade/Livewire)]
+        Mobile[Mobile App]
+        Report[Reports/Exports]
+        Notify[Notifications (Email/Firebase)]
+    end
+
+    IoT --> Controller
+    Manual --> Controller
+    API --> Controller
+
+    Controller --> Service
+    Service --> Job
+    Service --> Cache
+    Job --> DB
+    Service --> DB
+    Cache --> DB
+
+    DB --> Web
+    DB --> Mobile
+    DB --> Report
+    DB --> Notify
+    Redis --> Web
+    Redis --> Mobile
+
+    style DataSources fill:#e6f3ff,stroke:#333
+    style Backend fill:#fff3e6,stroke:#333
+    style Storage fill:#e6ffe6,stroke:#333
+    style Frontend fill:#ffe6e6,stroke:#333
+```
+
 ## Data Processing and Integration
 
 ### Data Processing Pipeline
@@ -118,4 +172,5 @@ routes/
 ---
 
 Last updated: 2025-09-26
+
 
