@@ -35,8 +35,8 @@ The system is organized into interconnected modules that handle different aspect
 - Models: `app/Models` — Eloquent models representing domain objects and device data
 - Views: `resources/views/...` — Blade templates and Livewire partials
 
-
 ## Detailed Architectural Diagram
+
 ```mermaid
 flowchart TD
     subgraph DataSources[Data Sources]
@@ -85,9 +85,7 @@ flowchart TD
     style DataSources fill:#e6f3ff,stroke:#333
     style Backend fill:#fff3e6,stroke:#333
     style Storage fill:#e6ffe6,stroke:#333
-    style Frontend fill:#ffe6e6,stroke:#333
-```
-## Data Processing and Integration
+    style Frontend fill:#ffe6e6,stroke:#333## Data Processing and Integration
 
 ### Data Processing Pipeline
 ```mermaid
@@ -170,6 +168,7 @@ routes/
 ---
 
 Last updated: 2025-09-26
+
 
 
 
