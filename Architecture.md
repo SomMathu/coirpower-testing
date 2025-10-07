@@ -38,7 +38,6 @@ The system is organized into interconnected modules that handle different aspect
 
 ## Detailed Architectural Diagram
 
-```mermaid
 flowchart TD
     subgraph DataSources[Data Sources]
         IoT[IoT Devices]
@@ -87,7 +86,6 @@ flowchart TD
     style Backend fill:#fff3e6,stroke:#333
     style Storage fill:#e6ffe6,stroke:#333
     style Frontend fill:#ffe6e6,stroke:#333
-```
 
 ## Data Processing and Integration
 
@@ -172,5 +170,6 @@ routes/
 ---
 
 Last updated: 2025-09-26
+
 
 
