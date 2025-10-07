@@ -86,7 +86,7 @@ flowchart TD
     style Backend fill:#fff3e6,stroke:#333
     style Storage fill:#e6ffe6,stroke:#333
     style Frontend fill:#ffe6e6,stroke:#333
-
+```
 ### Data Processing Pipeline
 ```mermaid
 flowchart LR
@@ -168,6 +168,7 @@ routes/
 ---
 
 Last updated: 2025-09-26
+
 
 
 
