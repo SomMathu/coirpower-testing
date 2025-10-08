@@ -52,47 +52,49 @@ flowchart TD
         direction TB
 
         subgraph A["Pith Production Management"]
-            LW_Prod[PithProductionList (Livewire)]
-            Ctrl_Prod[PithProductionController]
-            Model_Prod[PithProduction Model]
-            LW_Prod -- Manages UI for Production Records --> Ctrl_Prod
-            Ctrl_Prod -- Handles CRUD Operations --> Model_Prod
+            LW_Prod["PithProductionList (Livewire)"]
+            Ctrl_Prod["PithProductionController"]
+            Model_Prod["PithProduction Model"]
+            LW_Prod -- "Manages UI for Production Records" --> Ctrl_Prod
+            Ctrl_Prod -- "Handles CRUD Operations" --> Model_Prod
         end
 
         subgraph B["Pith Inventory Management"]
-            Trait_Inv[ManagePithInventory (Trait)]
-            Model_Inv[PithStockDepletion Model]
-            Trait_Inv -- Provides Inventory Logic --> Model_Inv
+            Trait_Inv["ManagePithInventory (Trait)"]
+            Model_Inv["PithStockDepletion Model"]
+            Trait_Inv -- "Provides Inventory Logic" --> Model_Inv
         end
 
         subgraph C["Pith Data Processing"]
-            Job_Pith[ProcessDeviceDataForPithJob]
-            Job_Pith -- Processes Raw Device Data --> Model_Prod
-            Job_Pith -- Creates Pith Loads --> Model_Load[PithLoad Model]
+            Job_Pith["ProcessDeviceDataForPithJob"]
+            Model_Load["PithLoad Model"]
+            Job_Pith -- "Processes Raw Device Data" --> Model_Prod
+            Job_Pith -- "Creates Pith Loads" --> Model_Load
         end
 
         subgraph D["Pith Dashboard & Reporting"]
-            Ctrl_Dash[DashboardPithLoadController]
-            Svc_Dash[PithProductionService]
-            Views_Dash[Pith Dashboard Views (Blade)]
-            Ctrl_Dash -- Prepares Data for Display --> Views_Dash
-            Ctrl_Dash -- Utilizes Business Logic --> Svc_Dash
-            Svc_Dash -- Aggregates Data From --> Model_Prod
-            Svc_Dash -- Aggregates Data From --> Model_Load
-            Svc_Dash -- Integrates with --> Model_State[DeviceDataState Model]
+            Ctrl_Dash["DashboardPithLoadController"]
+            Svc_Dash["PithProductionService"]
+            Views_Dash["Pith Dashboard Views (Blade)"]
+            Model_State["DeviceDataState Model"]
+            Ctrl_Dash -- "Prepares Data for Display" --> Views_Dash
+            Ctrl_Dash -- "Utilizes Business Logic" --> Svc_Dash
+            Svc_Dash -- "Aggregates Data From" --> Model_Prod
+            Svc_Dash -- "Aggregates Data From" --> Model_Load
+            Svc_Dash -- "Integrates with" --> Model_State
         end
 
         subgraph E["Pith Master Data"]
-            Model_Loc[PithLocation Model]
-            Model_Unit[PithUnit Model]
+            Model_Loc["PithLocation Model"]
+            Model_Unit["PithUnit Model"]
         end
 
-        A -- Interacts with --> C
-        A -- Interacts with --> D
-        B -- Interacts with --> A
-        C -- Feeds Data to --> D
-        E -- Configures --> A
-        E -- Configures --> B
+        A -- "Interacts with" --> C
+        A -- "Interacts with" --> D
+        B -- "Interacts with" --> A
+        C -- "Feeds Data to" --> D
+        E -- "Configures" --> A
+        E -- "Configures" --> B
     end
 
     style A fill:#e0f7fa,stroke:#00796b
