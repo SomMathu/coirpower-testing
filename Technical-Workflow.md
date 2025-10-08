@@ -249,10 +249,11 @@ sequenceDiagram
     M_DDPB--oDB: DeviceDataPithBlocks stores raw device data
     S_PBPS--oDB: PithBlocksProductionService aggregates data from DB
 
-    Note over U,DB: This diagram focuses on Pith-specific modules.
-    Note over C_PI,DB: PithInventoryController calculates stock based on loads.
-    Note over LW_PCE,C_PP: PithCreateAndEdit uses PithProductionController for persistence.
-    Note over S_PBPS,DB: PithBlocksProductionService provides data for dashboard charts.
+    Note over M_P,M_PLoad: PithProduction ↔ PithLoad (One-to-Many)
+    Note over M_PLoad,M_PL: PithLoad ↔ PithLocation (Belongs-To)
+    Note over M_DDPB,DB: DeviceDataPithBlocks stores raw device data
+    Note over S_PBPS,DB: PithBlocksProductionService aggregates data from DB
+
 ```
 
 This flow demonstrates how:
