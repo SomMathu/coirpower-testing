@@ -193,25 +193,66 @@ Here's a sequence diagram showing a typical user action flow:
 ```mermaid
 sequenceDiagram
     participant U as User
-    participant L as Livewire Component
-    participant C as Controller
-    participant S as Service
-    participant M as Model
-    participant D as Database
-    
-    U->>L: Triggers action
-    L->>C: Handles request
-    C->>S: Process data
-    S->>M: Validates input
-    M->>D: Query/Update data
-    D-->>M: Return results
-    M-->>S: Format data
-    S-->>C: Process response
-    C-->>L: Return data
-    L-->>U: Update UI
-    
-    Note over L,U: Real-time updates via Livewire events
-    Note over S,D: Service layer handles business logic
+    participant LW_PI as Livewire PithInventory
+    participant LW_PCE as Livewire PithCreateAndEdit
+    participant C_PI as PithInventoryController
+    participant C_PP as PithProductionController
+    participant S_PBPS as PithBlocksProductionService
+    participant M_PL as PithLocation Model
+    participant M_P as PithProduction Model
+    participant M_PLoad as PithLoad Model
+    participant M_DDPB as DeviceDataPithBlocks Model
+    participant DB as Database
+
+
+    U->>LW_PI: Views Pith Inventory Dashboard
+    LW_PI->>C_PI: Calls index() to get inventory data
+    C_PI->>DB: Queries pith_locations & pith_loads
+    DB-->>C_PI: Returns raw inventory data
+    C_PI-->>LW_PI: Returns processed locationsData
+    LW_PI->>U: Displays Pith Inventory (locations, stock)
+    Note over LW_PI,U: Real-time updates via Livewire events
+
+
+    U->>LW_PCE: Initiates Pith Production (Create/Edit)
+    LW_PCE->>M_PL: Fetches Pith Locations
+    M_PL->>DB: Queries pith_locations
+    DB-->>M_PL: Returns active locations
+    M_PL-->>LW_PCE: Provides locations for assignment
+    LW_PCE->>C_PP: Submits production data (via API/method)
+    C_PP->>M_P: Creates/Updates PithProduction record
+    M_P->>DB: Saves/Updates summary_pith_productions
+    DB-->>M_P: Confirmation
+    M_P-->>C_PP: Production saved
+    C_PP->>M_PLoad: Creates PithLoad records (for each location)
+    M_PLoad->>DB: Saves pith_loads (loads_offloaded)
+    DB-->>M_PLoad: Confirmation
+    M_PLoad-->>C_PP: Loads offloaded saved
+    C_PP-->>LW_PCE: Production saved successfully
+    LW_PCE->>U: Confirms production entry
+    Note over LW_PCE,U: Uses ManagePithInventory trait for common logic
+
+
+    U->>S_PBPS: Requests Pith Blocks Production Report (e.g., Dashboard)
+    S_PBPS->>M_DDPB: Queries device_data_pith_blocks
+    M_DDPB->>DB: Retrieves raw block data
+    DB-->>M_DDPB: Returns block data
+    M_DDPB-->>S_PBPS: Provides raw data
+    S_PBPS->>DB: Queries summary_pith_blocks (for aggregated data)
+    DB-->>S_PBPS: Returns aggregated block data
+    S_PBPS-->>U: Returns processed production data (daily, weekly, monthly)
+    Note over S_PBPS,DB: Service handles complex aggregation logic
+
+
+    M_P--oM_PLoad: PithProduction has many PithLoads
+    M_PLoad--oM_PL: PithLoad belongs to PithLocation
+    M_DDPB--oDB: DeviceDataPithBlocks stores raw device data
+    S_PBPS--oDB: PithBlocksProductionService aggregates data from DB
+
+    Note over U,DB: This diagram focuses on Pith-specific modules.
+    Note over C_PI,DB: PithInventoryController calculates stock based on loads.
+    Note over LW_PCE,C_PP: PithCreateAndEdit uses PithProductionController for persistence.
+    Note over S_PBPS,DB: PithBlocksProductionService provides data for dashboard charts.
 ```
 
 This flow demonstrates how:
