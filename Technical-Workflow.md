@@ -48,27 +48,58 @@ flowchart LR
 
 ```mermaid
 flowchart TD
-    subgraph PithModule["Pith Module"]
+    subgraph PithModule["Pith Module: Core Functionalities & Components"]
         direction TB
-        LW("PithProductionList (Livewire)")
-        PithController("PithProductionController (API/CRUD)")
-        PithModel("PithProduction / PithLoad")
-        InventoryTrait("ManagePithInventory trait")
-        Views["/resources/views/livewire/pith/*"]
+
+        subgraph A["Pith Production Management"]
+            LW_Prod[PithProductionList (Livewire)]
+            Ctrl_Prod[PithProductionController]
+            Model_Prod[PithProduction Model]
+            LW_Prod -- Manages UI for Production Records --> Ctrl_Prod
+            Ctrl_Prod -- Handles CRUD Operations --> Model_Prod
+        end
+
+        subgraph B["Pith Inventory Management"]
+            Trait_Inv[ManagePithInventory (Trait)]
+            Model_Inv[PithStockDepletion Model]
+            Trait_Inv -- Provides Inventory Logic --> Model_Inv
+        end
+
+        subgraph C["Pith Data Processing"]
+            Job_Pith[ProcessDeviceDataForPithJob]
+            Job_Pith -- Processes Raw Device Data --> Model_Prod
+            Job_Pith -- Creates Pith Loads --> Model_Load[PithLoad Model]
+        end
+
+        subgraph D["Pith Dashboard & Reporting"]
+            Ctrl_Dash[DashboardPithLoadController]
+            Svc_Dash[PithProductionService]
+            Views_Dash[Pith Dashboard Views (Blade)]
+            Ctrl_Dash -- Prepares Data for Display --> Views_Dash
+            Ctrl_Dash -- Utilizes Business Logic --> Svc_Dash
+            Svc_Dash -- Aggregates Data From --> Model_Prod
+            Svc_Dash -- Aggregates Data From --> Model_Load
+            Svc_Dash -- Integrates with --> Model_State[DeviceDataState Model]
+        end
+
+        subgraph E["Pith Master Data"]
+            Model_Loc[PithLocation Model]
+            Model_Unit[PithUnit Model]
+        end
+
+        A -- Interacts with --> C
+        A -- Interacts with --> D
+        B -- Interacts with --> A
+        C -- Feeds Data to --> D
+        E -- Configures --> A
+        E -- Configures --> B
     end
 
-    LW -->|"selectProduction(id)"| PithModel
-    LW -->|"openInventoryModal"| InventoryTrait
-    LW -->|"updateLoads"| PithController
-    LW -->|"deleteProduction"| PithModel
-    LW -->|"renders"| Views
-
-    PithController -->|"store/update/generateReport"| PithModel
-    PithController -->|"reads"| PithLoad
-
-    style LW fill:#ecfeff,stroke:#333
-    style PithController fill:#fff7ed,stroke:#333
-    style PithModel fill:#fef2f2,stroke:#333
+    style A fill:#e0f7fa,stroke:#00796b
+    style B fill:#fff3e0,stroke:#e65100
+    style C fill:#e8f5e9,stroke:#33691e
+    style D fill:#e3f2fd,stroke:#1565c0
+    style E fill:#fce4ec,stroke:#ad1457
 ```
 
 Notes: The Pith UI uses Livewire components (under `app/Livewire/Pith/*`) for interactive lists and modals. The components call models and use a `ManagePithInventory` trait for reusable inventory operations.
