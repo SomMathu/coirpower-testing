@@ -242,17 +242,11 @@ sequenceDiagram
     DB-->>S_PBPS: Returns aggregated block data
     S_PBPS-->>U: Returns processed production data (daily, weekly, monthly)
     Note over S_PBPS,DB: Service handles complex aggregation logic
-
-
-    M_P--oM_PLoad: PithProduction has many PithLoads
-    M_PLoad--oM_PL: PithLoad belongs to PithLocation
-    M_DDPB--oDB: DeviceDataPithBlocks stores raw device data
-    S_PBPS--oDB: PithBlocksProductionService aggregates data from DB
-
-    Note over M_P,M_PLoad: PithProduction ↔ PithLoad (One-to-Many)
+     Note over M_P,M_PLoad: PithProduction ↔ PithLoad (One-to-Many)
     Note over M_PLoad,M_PL: PithLoad ↔ PithLocation (Belongs-To)
     Note over M_DDPB,DB: DeviceDataPithBlocks stores raw device data
     Note over S_PBPS,DB: PithBlocksProductionService aggregates data from DB
+
 
 ```
 
